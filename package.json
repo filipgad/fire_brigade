@@ -1,0 +1,28 @@
+{
+  "name": "fire_bridge",
+  "version": "1.0.0",
+  "description": "Single-page application with information on which city the fire brigade is in and which cities it will reach",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "wp": "./node_modules/.bin/webpack",
+    "serve": "./node_modules/.bin/webpack-dev-server"
+  },
+  "author": "Filip Godziński",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "css-loader": "^0.28.5",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "url-loader": "^0.6.2",
+    "node-sass": "^4.5.3",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.18.2",
+    "webpack": "^3.5.5",
+    "webpack-dev-server": "^2.7.1"
+  }
+}
