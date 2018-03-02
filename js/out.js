@@ -71,9 +71,34 @@
 
 
 var container = document.getElementById('container');
+var timer = document.createElement("div");
+timer.classList.add("timer");
+container.appendChild(timer);
 
-container.addEventListener("click", function () {
-    console.log("DZIAŁA");
+fetch('../db.json').then(function (resp) {
+    return resp.json();
+}).then(function (resp) {
+    console.log(resp);
+    timer.innerText = "Maximum travel time: " + resp.max_travel_time.max_travel_time;
+    resp.cities.forEach(function (city) {
+        if (city.fire_brigade === "true") {
+            var newCity = document.createElement("div");
+            newCity.classList.add("fire_brigade");
+            newCity.dataset.city = city.city;
+            newCity.innerText = city.city;
+            container.appendChild(newCity);
+        } else {
+            var newDestCity = document.createElement("div");
+            newDestCity.classList.add("destination_city");
+            newDestCity.dataset.city = city.city;
+            newDestCity.innerText = city.city;
+            container.appendChild(newDestCity);
+        }
+        console.log(city);
+    });
+    resp.roads.forEach(function (road) {
+        console.log(road);
+    });
 });
 
 /***/ })
