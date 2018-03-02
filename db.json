@@ -43,5 +43,7 @@
             "travel_time": 4
         }
     ],
-    "maximum_travel_time": 7
+    "max_travel_time": {
+        "max_travel_time": 7
+    }
 }
