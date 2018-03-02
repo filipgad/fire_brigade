@@ -1,0 +1,47 @@
+{
+    "cities": [
+        {
+            "city": "A",
+            "fire_brigade": "true"
+        },
+        {
+            "city": "B",
+            "fire_brigade": "false"
+        },
+        {
+            "city": "C",
+            "fire_brigade": "false"
+        },
+        {
+            "city": "D",
+            "fire_brigade": "false"
+        },
+        {
+            "city": "E",
+            "fire_brigade": "true"
+        },
+        {
+            "city": "F",
+            "fire_brigade": "false"
+        }
+    ],
+    "roads": [
+        {
+            "connection": ["A", "B"],
+            "travel_time": 6
+        },
+        {
+            "connection": ["A", "C"],
+            "travel_time": 8
+        },
+        {
+            "connection": ["E", "D"],
+            "travel_time": 10
+        },
+        {
+            "connection": ["E", "F"],
+            "travel_time": 4
+        }
+    ],
+    "maximum_travel_time": 7
+}
