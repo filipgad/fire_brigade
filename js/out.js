@@ -71,33 +71,50 @@
 
 
 var container = document.getElementById('container');
-var timer = document.createElement("div");
-timer.classList.add("timer");
-container.appendChild(timer);
+var roads_list = document.createElement("ul");
+container.appendChild(roads_list);
+
+var timer = function timer(time) {
+    var timer = document.createElement("div");
+    timer.classList.add("timer");
+    timer.innerText = "Maximum travel time is: " + time;
+    container.appendChild(timer);
+};
+
+var fire_brigade = function fire_brigade(city) {
+    var fire_brigade = document.createElement("div");
+    fire_brigade.classList.add("fire_brigade");
+    fire_brigade.innerText = city + " - city with fire brigade";
+    container.appendChild(fire_brigade);
+};
+
+var dest_city = function dest_city(city) {
+    var dest_city = document.createElement("div");
+    dest_city.classList.add("dest_city");
+    dest_city.innerText = city + " - city without fire brigade";
+    container.appendChild(dest_city);
+};
+
+var roads = function roads(road) {
+    var road_elem = document.createElement("li");
+    road_elem.classList.add("road");
+    road_elem.innerText = "Droga łączy miasto " + road.connection[0] + " z miastem " + road.connection[1] + ". Czas przejazdu wynosi: " + road.travel_time;
+    roads_list.appendChild(road_elem);
+};
 
 fetch('../db.json').then(function (resp) {
     return resp.json();
 }).then(function (resp) {
-    console.log(resp);
-    timer.innerText = "Maximum travel time: " + resp.max_travel_time.max_travel_time;
+    timer(resp.max_travel_time.max_travel_time);
     resp.cities.forEach(function (city) {
         if (city.fire_brigade === "true") {
-            var newCity = document.createElement("div");
-            newCity.classList.add("fire_brigade");
-            newCity.dataset.city = city.city;
-            newCity.innerText = city.city;
-            container.appendChild(newCity);
+            fire_brigade(city.city);
         } else {
-            var newDestCity = document.createElement("div");
-            newDestCity.classList.add("destination_city");
-            newDestCity.dataset.city = city.city;
-            newDestCity.innerText = city.city;
-            container.appendChild(newDestCity);
+            dest_city(city.city);
         }
-        console.log(city);
     });
     resp.roads.forEach(function (road) {
-        console.log(road);
+        roads(road);
     });
 });
 
