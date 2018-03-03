@@ -71,8 +71,14 @@
 
 
 var container = document.getElementById('container');
+var timer = document.createElement("div");
+var cities_board = document.createElement("div");
+timer.classList.add("timer");
+cities_board.classList.add("cities_table");
+container.appendChild(timer);
+container.appendChild(cities_board);
 
-var cities = function cities() {
+(function () {
     fetch('../db.json').then(function (resp) {
         return resp.json();
     }).then(function (resp) {
@@ -80,18 +86,15 @@ var cities = function cities() {
         var roads = resp.roads;
         var time = resp.max_travel_time;
 
-        var timer = document.createElement("div");
-        timer.classList.add("timer");
-        timer.innerText = "Maximum travel time is: " + time;
-        container.appendChild(timer);
+        timer.innerHTML = "<h1>Maximum travel time: " + time + "min</h1>";
 
         cities.forEach(function (city) {
             if (city.fire_brigade === "true") {
                 var new_city = document.createElement("div");
                 new_city.classList.add("fire_brigade");
                 new_city.dataset.city = city.city;
-                new_city.innerText = city.city;
-                container.appendChild(new_city);
+                new_city.innerHTML = "<h1>Fire brigade in city " + city.city + "</h1>\n                                            <p>Cities in fire brigade district:</p>";
+                cities_board.appendChild(new_city);
             }
         });
 
@@ -100,25 +103,25 @@ var cities = function cities() {
                 var dest_city = document.createElement("div");
                 dest_city.classList.add("dest_city");
                 dest_city.dataset.city = city.city;
-                dest_city.innerText = city.city;
+                dest_city.innerHTML = "<h2>City: " + city.city + "</h2>";
                 roads.forEach(function (road) {
                     if (road.connection[1] == city.city) {
-                        dest_city.innerText = 'City name: ' + city.city + ', time to get here: ' + road.travel_time;
-                        var new_city = document.querySelector('[data-city=' + road.connection[0] + ']');
+                        var time_info = document.createElement("p");
+                        time_info.innerText = "Time to get here: " + road.travel_time + "min";
+                        var new_city = document.querySelector("[data-city=" + road.connection[0] + "]");
+                        dest_city.appendChild(time_info);
                         new_city.appendChild(dest_city);
                         if (road.travel_time <= time) {
-                            dest_city.style.border = "1px solid green";
+                            dest_city.style.backgroundColor = "#86D175";
                         } else {
-                            dest_city.style.border = "1px solid red";
+                            dest_city.style.backgroundColor = "#CB8762";
                         }
                     }
                 });
             }
         });
     });
-};
-
-cities();
+})();
 
 /***/ })
 /******/ ]);
