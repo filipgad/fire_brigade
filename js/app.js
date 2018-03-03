@@ -34,14 +34,14 @@ container.appendChild(cities_board);
                     dest_city.dataset.city = city.city;
                     dest_city.innerHTML = `<h2>City: ${city.city}</h2>`;
                     roads.forEach( road => {
-                        if(road.connection[1] == city.city) {
+                        if(road.connection.indexOf(city.city) !== -1) {
                             const time_info = document.createElement("p");
                             time_info.innerText = `Time to get here: ${road.travel_time}min`;
-                            const new_city = document.querySelector(`[data-city=${road.connection[0]}]`);
+                            const fire_brigade_city = document.querySelector(`[data-city=${road.connection[road.connection.indexOf(dest_city.dataset.city) == 0 ? 1 : 0]}]`);
                             dest_city.appendChild(time_info);
-                            new_city.appendChild(dest_city);
+                            fire_brigade_city.appendChild(dest_city);
                             if(road.travel_time <= time) {
-                                dest_city.style.backgroundColor = "#86D175";
+                                dest_city.style.backgroundColor = "#86D175"; 
                             } else {
                                 dest_city.style.backgroundColor = "#CB8762";
                             }
