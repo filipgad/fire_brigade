@@ -20,9 +20,10 @@ body {
 .fire_brigade {
   width: 500px;
   margin: 20px;
-  border: 1px solid blue; }
+  padding: 40px;
+  border: 1px solid #000; }
 
 .dest_city {
-  width: 200px;
-  margin: 5px;
-  border: 1px solid red; }
+  width: 100%;
+  margin: 20px 0;
+  border: 1px solid #000; }
