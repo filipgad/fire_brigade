@@ -71,52 +71,54 @@
 
 
 var container = document.getElementById('container');
-var roads_list = document.createElement("ul");
-container.appendChild(roads_list);
 
-var timer = function timer(time) {
-    var timer = document.createElement("div");
-    timer.classList.add("timer");
-    timer.innerText = "Maximum travel time is: " + time;
-    container.appendChild(timer);
-};
+var cities = function cities() {
+    fetch('../db.json').then(function (resp) {
+        return resp.json();
+    }).then(function (resp) {
+        var cities = resp.cities;
+        var roads = resp.roads;
+        var time = resp.max_travel_time;
 
-var fire_brigade = function fire_brigade(city) {
-    var fire_brigade = document.createElement("div");
-    fire_brigade.classList.add("fire_brigade");
-    fire_brigade.innerText = city + " - city with fire brigade";
-    container.appendChild(fire_brigade);
-};
+        var timer = document.createElement("div");
+        timer.classList.add("timer");
+        timer.innerText = "Maximum travel time is: " + time;
+        container.appendChild(timer);
 
-var dest_city = function dest_city(city) {
-    var dest_city = document.createElement("div");
-    dest_city.classList.add("dest_city");
-    dest_city.innerText = city + " - city without fire brigade";
-    container.appendChild(dest_city);
-};
+        cities.forEach(function (city) {
+            if (city.fire_brigade === "true") {
+                var new_city = document.createElement("div");
+                new_city.classList.add("fire_brigade");
+                new_city.dataset.city = city.city;
+                new_city.innerText = city.city;
+                container.appendChild(new_city);
+            }
+        });
 
-var roads = function roads(road) {
-    var road_elem = document.createElement("li");
-    road_elem.classList.add("road");
-    road_elem.innerText = "Droga łączy miasto " + road.connection[0] + " z miastem " + road.connection[1] + ". Czas przejazdu wynosi: " + road.travel_time;
-    roads_list.appendChild(road_elem);
-};
-
-fetch('../db.json').then(function (resp) {
-    return resp.json();
-}).then(function (resp) {
-    timer(resp.max_travel_time.max_travel_time);
-    resp.cities.forEach(function (city) {
-        if (city.fire_brigade === "true") {
-            fire_brigade(city.city);
-        } else {
-            dest_city(city.city);
-        }
+        cities.forEach(function (city) {
+            if (city.fire_brigade === "false") {
+                var dest_city = document.createElement("div");
+                dest_city.classList.add("dest_city");
+                dest_city.dataset.city = city.city;
+                dest_city.innerText = city.city;
+                roads.forEach(function (road) {
+                    if (road.connection[1] == city.city) {
+                        dest_city.innerText = 'City name: ' + city.city + ', time to get here: ' + road.travel_time;
+                        var new_city = document.querySelector('[data-city=' + road.connection[0] + ']');
+                        new_city.appendChild(dest_city);
+                        if (road.travel_time <= time) {
+                            dest_city.style.border = "1px solid green";
+                        } else {
+                            dest_city.style.border = "1px solid red";
+                        }
+                    }
+                });
+            }
+        });
     });
-    resp.roads.forEach(function (road) {
-        roads(road);
-    });
-});
+};
+
+cities();
 
 /***/ })
 /******/ ]);
