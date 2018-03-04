@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "wp": "./node_modules/.bin/webpack",
-    "serve": "./node_modules/.bin/webpack-dev-server"
+    "start": "./node_modules/.bin/webpack-dev-server"
   },
   "author": "Filip Godziński",
   "license": "ISC",
