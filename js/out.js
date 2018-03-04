@@ -73,18 +73,14 @@
 (function () {
 
     var container = document.getElementById('container');
-    var timer = document.createElement("div");
-    var cities_board = document.createElement("div");
-    timer.classList.add("timer");
-    cities_board.classList.add("cities_table");
-    container.appendChild(timer);
-    container.appendChild(cities_board);
+    var timer = document.querySelector('.timer');
+    var citiesBoard = document.querySelector('.citiesBoard');
 
     fetch('../db.json').then(function (resp) {
-        if (resp.ok) {
-            return resp.json();
+        if (!resp.ok) {
+            throw new Error(resp.statusText);
         } else {
-            throw new Error('Error!');
+            return resp.json();
         }
     }).then(function (data) {
         var cities = data.cities;
@@ -92,48 +88,48 @@
         var time = data.max_travel_time;
 
         // Maximum travel time information
-        timer.innerHTML = "<h1>Maximum travel time: " + time + "min</h1>";
+        timer.innerHTML = '<h1>Maximum travel time: ' + time + 'min</h1>';
 
         // Create cities with fire brigade
         cities.forEach(function (city) {
-            if (city.fire_brigade === "true") {
-                var new_city = document.createElement("div");
-                new_city.classList.add("fire_brigade");
-                new_city.dataset.city = city.city;
-                new_city.innerHTML = "<h1>Fire brigade in city " + city.city + "</h1>\n                                            <p>Cities in fire brigade district:</p>";
-                cities_board.appendChild(new_city);
+            if (city.fire_brigade === 'true') {
+                var newCity = document.createElement('div');
+                newCity.classList.add('fireBrigade');
+                newCity.dataset.city = city.city;
+                newCity.innerHTML = '<h1>Fire brigade in city ' + city.city + '</h1>\n                                            <p>Cities in fire brigade district:</p>';
+                citiesBoard.appendChild(newCity);
             }
         });
 
         // Create cities without fire brigade
         cities.forEach(function (city) {
-            if (city.fire_brigade === "false") {
-                var dest_city = document.createElement("div");
-                dest_city.classList.add("dest_city");
-                dest_city.dataset.city = city.city;
-                dest_city.innerHTML = "<h2>City: " + city.city + "</h2>";
+            if (city.fire_brigade === 'false') {
+                var destCity = document.createElement('div');
+                destCity.classList.add('destCity');
+                destCity.dataset.city = city.city;
+                destCity.innerHTML = '<h2>City: ' + city.city + '</h2>';
 
                 // Find road connection between fire brigade and city
                 roads.forEach(function (road) {
                     if (road.connection.indexOf(city.city) !== -1) {
-                        var time_info = document.createElement("p");
-                        time_info.innerText = "Time to get here: " + road.travel_time + "min";
-                        var fire_brigade_city = document.querySelector("[data-city=" + road.connection[road.connection.indexOf(dest_city.dataset.city) === 0 ? 1 : 0] + "]");
-                        dest_city.appendChild(time_info);
-                        fire_brigade_city.appendChild(dest_city);
+                        var timeInfo = document.createElement('p');
+                        timeInfo.innerText = 'Time to get here: ' + road.travel_time + 'min';
+                        var fireBrigadeCity = document.querySelector('[data-city=' + road.connection[road.connection.indexOf(destCity.dataset.city) === 0 ? 1 : 0] + ']');
+                        destCity.appendChild(timeInfo);
+                        fireBrigadeCity.appendChild(destCity);
 
                         // Check if fire brigade could reach get to the city in maximum travel time
                         if (road.travel_time <= time) {
-                            dest_city.style.backgroundColor = "#86D175";
+                            destCity.style.backgroundColor = '#86D175';
                         } else {
-                            dest_city.style.backgroundColor = "#CB8762";
+                            destCity.style.backgroundColor = '#CB8762';
                         }
                     }
                 });
             }
         });
     }).catch(function (err) {
-        console.log('Error!', err);
+        console.error('Error:', err);
     });
 })();
 
