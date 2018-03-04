@@ -28,13 +28,13 @@ body {
     background-color: #E2C8A7;
 }
 
-.cities_table {
+.citiesBoard {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
 }
 
-.fire_brigade {
+.fireBrigade {
     width: 500px;
     margin: 50px;
     padding: 40px;
@@ -46,7 +46,7 @@ body {
     }
 }
 
-.dest_city {
+.destCity {
     width: 100%;
     margin: 20px 0;
     padding: 10px;

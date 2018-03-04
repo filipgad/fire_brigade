@@ -22,24 +22,24 @@ body {
   text-align: center;
   background-color: #E2C8A7; }
 
-.cities_table {
+.citiesBoard {
   display: flex;
   justify-content: center;
   flex-wrap: wrap; }
 
-.fire_brigade {
+.fireBrigade {
   width: 500px;
   margin: 50px;
   padding: 40px;
   background-color: #E9E9E9; }
-  .fire_brigade h1::before {
+  .fireBrigade h1::before {
     font-family: "FontAwesome";
     content: "\F134";
     padding-right: 10px; }
 
-.dest_city {
+.destCity {
   width: 100%;
   margin: 20px 0;
   padding: 10px; }
-  .dest_city h2 {
+  .destCity h2 {
     margin-bottom: 10px; }
